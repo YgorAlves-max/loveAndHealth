@@ -1,20 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+
 export const routes: Routes = [
   {
-    path: 'register',
-    component: RegisterComponent,
+    path: '',
+    loadChildren: () =>
+      import('./layouts/pages/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadChildren: () =>
+      import('./layouts/pages/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
   },
-  { path: 'home', component: LoginComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Defina uma rota padrão
-  { path: '**', redirectTo: '/home' }, // Redirecione rotas não encontradas para a página inicial
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./layouts/pages/register/register.module').then(
+        (m) => m.RegisterModule
+      ),
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

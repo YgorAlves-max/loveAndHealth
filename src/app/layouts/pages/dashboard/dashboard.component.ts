@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityService } from 'src/app/shared/services/entity.service';
 import { Entity } from 'src/app/shared/models/entity.model';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { EntityService } from 'src/app/shared/services/entity.service';
 
 @Component({
-  standalone: true,
-  imports: [MatIconModule, MatTableModule],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],

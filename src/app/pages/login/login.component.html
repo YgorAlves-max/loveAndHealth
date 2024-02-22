@@ -1,0 +1,76 @@
+<main class="flex items-center justify-center h-screen p-5">
+  <mat-card class="flex items-center">
+    <mat-card-title>Login</mat-card-title>
+    <form class="w-full" [formGroup]="loginForm" (ngSubmit)="submitForm()">
+      <mat-card-content align="center">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            [readonly]="processing"
+          />
+          <mat-error
+            *ngIf="loginForm.get('email')?.errors?.['required'] && (formSubmitted && loginForm.get('email')?.touched)"
+          >
+            Email é obrigatório
+          </mat-error>
+          <mat-error
+            *ngIf="loginForm.get('email')?.errors?.['email'] && (formSubmitted && loginForm.get('email')?.touched)"
+          >
+            Formato de email inválido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            formControlName="password"
+            [readonly]="processing"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="hide ? 'Hide password' : 'Show password'"
+            [disabled]="processing"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="loginForm.get('password')?.errors?.['required'] && (formSubmitted && loginForm.get('password')?.touched)"
+          >
+            Senha é obrigatória
+          </mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="credentialsInvalid && formSubmitted">
+          Credenciais inválidas. Por favor, tente novamente.
+        </mat-error>
+        <mat-error
+          *ngIf="loginForm.invalid && formSubmitted && !credentialsInvalid"
+        >
+          Por favor, corrija os erros no formulário.
+        </mat-error>
+        <p *ngIf="processing">Enviando credenciais...</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="w-full"
+          [disabled]="processing"
+        >
+          Entrar
+        </button>
+      </mat-card-actions>
+    </form>
+    <p>Não tem cadastro?</p>
+    <a [routerLink]="['/register']" routerLinkActive="router-link-active"
+      >Cadastre-se</a
+    >
+  </mat-card>
+</main>
